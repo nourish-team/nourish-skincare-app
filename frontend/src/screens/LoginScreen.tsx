@@ -41,14 +41,14 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 40,
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFDD0",
     alignItems: "center",
     justifyContent: "center",
   },
   buttonContainer: {
     width: 200,
     height: 50,
-    backgroundColor: "rgba(40,40,233,255)",
+    backgroundColor: "rgba(1,90,131,255)",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 0,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: 200,
     height: 50,
-    borderColor: "rgba(40,40,233,255)",
+    borderColor: "rgba(1,90,131,255)",
     borderWidth: 1,
     padding: 10,
   },
