@@ -2,16 +2,16 @@ import express, {Request, Response} from "express";
 const router = express.Router();
 
 // GET
-router.get('/journal/:routineid', (req: Request, res: Response) => {
+router.get('/journal/:routineId', (req: Request, res: Response) => {
     res.send("send back journal per routine")
 });
 router.get('/product/:name', (req: Request, res: Response) => {
     res.send("send product by name")
 });
-router.get('/routine/:userid', (req: Request, res: Response) => {
+router.get('/routine/:userId', (req: Request, res: Response) => {
     res.send("send routine by user id")
 });
-router.get('/routine/:skintype', (req: Request, res: Response) => {
+router.get('/routine/:skinType', (req: Request, res: Response) => {
     res.send("send routine by user id")
 });
 
