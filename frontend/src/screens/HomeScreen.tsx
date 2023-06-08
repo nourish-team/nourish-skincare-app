@@ -1,75 +1,85 @@
 import React from "react";
-import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { ParamListBase, useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 
-const WelcomeAndInfoScreen: React.FC = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-
-  const handleSignUpPress = () => {
-    navigation.navigate("Signup");
-  };
-
-  const handleLoginPress = () => {
-    navigation.navigate("Login");
-  };
-
+const HomeScreen: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.titleText}>nourish.</Text>
-      <Image
-        style={styles.tinyLogo}
-        source={require("../../assets/images/nourish_logo.png")}
-      />
-      <Text style={styles.copyrightText}>© 2023</Text>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>nourish.</Text>
+        <Image
+          style={styles.tinyLogo}
+          source={require("../../assets/images/nourish_logo.png")}
+        />
+      </View>
+      <View style={styles.line} />
       <Text style={styles.infoText}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
-        quo, culpa commodi, placeat quidem quaerat omnis itaque nulla hic porro
-        animi non?
+        Hello Beautiful... Lorem ipsum, dolor sit amet consectetur adipisicing
+        elit. Ipsa modi placeat dolor, obcaecati quod impedit incidunt nesciunt
+        deleniti sequi odit aperiam aliquam repellat aliquid numquam
+        reprehenderit, quas quae enim repudiandae.
       </Text>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={handleSignUpPress}
-      >
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={handleLoginPress}
-      >
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+      <View style={styles.line} />
+      <Text style={styles.infoText}>browse by skin type</Text>
+      <View style={styles.buttonContainer}>
+        <View style={styles.buttonRow}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Acne</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, styles.buttonMargin]}>
+            <Text style={styles.buttonText}>Dry</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.buttonRow}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Oily</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, styles.buttonMargin]}>
+            <Text style={styles.buttonText}>Sensitive</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
+    paddingTop: 70,
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    paddingLeft: 20,
+    paddingRight: 20,
   },
-  tinyLogo: {
-    width: 130,
-    height: 130,
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
     marginBottom: 10,
   },
+  tinyLogo: {
+    width: 40,
+    height: 40,
+    marginTop: -7,
+  },
   titleText: {
-    textAlign: "center",
-    fontSize: 50,
+    textAlign: "left",
+    fontSize: 40,
     fontFamily: "PlayfairDisplay-Bold",
     color: "rgba(40,40,233,255)",
     marginBottom: 20,
     marginTop: -20,
   },
-  copyrightText: {
-    textAlign: "center",
-    fontSize: 15,
-    fontFamily: "PlayfairDisplay-Bold",
-    color: "rgba(40,40,233,255)",
-    marginBottom: 20,
+  line: {
+    width: "100%",
+    height: 2,
+    backgroundColor: "rgba(40,40,233,255)",
+    marginTop: -10,
   },
   infoText: {
     textAlign: "center",
@@ -77,23 +87,33 @@ const styles = StyleSheet.create({
     fontFamily: "Lato-Bold",
     color: "rgba(40,40,233,255)",
     lineHeight: 25,
-    width: 250,
     marginBottom: 30,
+    marginTop: 30,
   },
   buttonContainer: {
-    width: 200,
-    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 20,
+  },
+  button: {
+    width: 100,
+    height: 100,
     backgroundColor: "rgba(40,40,233,255)",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 0,
-    marginTop: 16,
   },
   buttonText: {
     color: "white",
     fontSize: 16,
     fontFamily: "Lato-Bold",
   },
+  buttonMargin: {
+    marginLeft: 25,
+  },
 });
 
-export default WelcomeAndInfoScreen;
+export default HomeScreen;
