@@ -12,6 +12,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 import SignupScreen from "./src/screens/SignupScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
+import UserPageScreen from "./src/screens/UserPageScreen";
 
 // Context
 import { AppContext } from "./src/contexts/AppContext";
@@ -30,6 +31,7 @@ const Apptabs: React.FC = () => (
     }}
   >
     <Tab.Screen name="Home" component={HomeScreen}></Tab.Screen>
+    <Tab.Screen name="UserPage" component={UserPageScreen}></Tab.Screen>
   </Tab.Navigator>
 );
 
