@@ -9,6 +9,7 @@ import * as Font from "expo-font";
 // Components
 import HomeScreen from "./src/screens/HomeScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
+import WelcomeScreen from "./src/screens/WelcomeScreen";
 
 // Context
 import { AppContext } from "./src/contexts/AppContext";
@@ -58,6 +59,7 @@ export default function App() {
               headerShown: false,
             }}
           >
+            <Stack.Screen name="Welcome Screen" component={WelcomeScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
           </Stack.Navigator>
         </NavigationContainer>
