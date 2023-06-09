@@ -1,7 +1,24 @@
-import React from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
 
 const UserPageScreen: React.FC = () => {
+  const [userRoutines, setUserRoutines] = useState<any[]>([]);
+  const [fetchRoutinesError, setFetchRoutinesError] = useState(false);
+
+  useEffect(() => {
+    fetchRoutines();
+  }, []);
+
+  const fetchRoutines = async () => {
+    try {
+      const response = await fetch(""); //put in route later
+      const data = await response.json();
+      setUserRoutines(data);
+    } catch (error) {
+      setFetchRoutinesError(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
