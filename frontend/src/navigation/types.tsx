@@ -4,6 +4,9 @@ export type RootStackParamList = {
   Signup: undefined;
   HomeScreen: undefined;
   SkincareType: { skincareType: string };
+  UserPageScreen: undefined;
+  UserRoutinePageScreen: { routineId: number; routineName: string };
+  AddJournalScreen: undefined;
 };
 
 export type MainTabParamList = {
