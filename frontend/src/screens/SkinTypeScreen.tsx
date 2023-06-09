@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
+import { ParamListBase, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 const SkincareTypeScreen: React.FC<{ route: any }> = ({ route }) => {
   const { skincareType } = route.params;
   const [routinesByType, setRoutinesByType] = useState([]);
   const [fetchRoutinesError, setFetchRoutinesError] = useState(false);
+
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
+  const handleBackPress = () => {
+    navigation.navigate("HomeScreen");
+  };
 
   const fetchRoutinesByType = async () => {
     try {
@@ -19,6 +27,7 @@ const SkincareTypeScreen: React.FC<{ route: any }> = ({ route }) => {
   return (
     <View style={styles.container}>
       <Text>You selected {skincareType} skin type</Text>
+      <Button title="Back" onPress={handleBackPress} />
     </View>
     // Map through the routines here later
   );
