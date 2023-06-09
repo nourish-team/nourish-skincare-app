@@ -1,9 +1,18 @@
 import React, { SetStateAction, useEffect, useState } from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../navigation/types";
+import { StackNavigationProp } from "@react-navigation/stack";
+
+type UserPageScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "UserPageScreen"
+>;
 
 const UserPageScreen: React.FC = () => {
   const [userRoutines, setUserRoutines] = useState<any[]>([]);
   const [fetchRoutinesError, setFetchRoutinesError] = useState(false);
+  const navigation = useNavigation<UserPageScreenNavigationProp>();
 
   useEffect(() => {
     fetchRoutines();
@@ -19,6 +28,10 @@ const UserPageScreen: React.FC = () => {
     }
   };
 
+  const handleRoutinePress = (routineId: number, routineName: string) => {
+    navigation.navigate("UserRoutinePageScreen", { routineId, routineName });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -30,6 +43,12 @@ const UserPageScreen: React.FC = () => {
       </View>
       <View style={styles.line} />
       <Text style={styles.infoText}>My Routines</Text>
+      <TouchableOpacity
+        key={1}
+        onPress={() => handleRoutinePress(1, "Summer 2020")}
+      >
+        <Text>{"Summer 2020"}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
