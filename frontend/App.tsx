@@ -13,13 +13,17 @@ import SignupScreen from "./src/screens/SignupScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
 import UserPageScreen from "./src/screens/UserPageScreen";
+import SkincareTypeScreen from "./src/screens/SkinTypeScreen";
+
+// Nav
+import { RootStackParamList, MainTabParamList } from "./src/navigation/types";
 
 // Context
 import { AppContext } from "./src/contexts/AppContext";
 
 // Tab & Stack
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator<MainTabParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 
 // App Tabs
 const Apptabs: React.FC = () => (
@@ -81,6 +85,7 @@ export default function App() {
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />
             <Stack.Screen name="HomeScreen" component={Apptabs} />
+            <Stack.Screen name="SkincareType" component={SkincareTypeScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </AppContext.Provider>
