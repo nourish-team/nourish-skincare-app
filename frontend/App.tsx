@@ -14,6 +14,8 @@ import HomeScreen from "./src/screens/HomeScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
 import UserPageScreen from "./src/screens/UserPageScreen";
 import SkincareTypeScreen from "./src/screens/SkinTypeScreen";
+import UserRoutinePageScreen from "./src/screens/UserRoutinePageScreen";
+import AddJournalScreen from "./src/screens/AddJournalScreen";
 
 // Nav
 import { RootStackParamList, MainTabParamList } from "./src/navigation/types";
@@ -86,6 +88,14 @@ export default function App() {
             <Stack.Screen name="Signup" component={SignupScreen} />
             <Stack.Screen name="HomeScreen" component={Apptabs} />
             <Stack.Screen name="SkincareType" component={SkincareTypeScreen} />
+            <Stack.Screen
+              name="UserRoutinePageScreen"
+              component={UserRoutinePageScreen}
+            />
+            <Stack.Screen
+              name="AddJournalScreen"
+              component={AddJournalScreen}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </AppContext.Provider>
