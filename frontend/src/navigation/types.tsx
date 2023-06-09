@@ -7,6 +7,7 @@ export type RootStackParamList = {
   UserPageScreen: undefined;
   UserRoutinePageScreen: { routineId: number; routineName: string };
   AddJournalScreen: undefined;
+  SearchToAddScreen: { routineId: number };
 };
 
 export type MainTabParamList = {

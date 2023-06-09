@@ -5,6 +5,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation/types";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { AntDesign } from "@expo/vector-icons";
 
 type RoutinePageScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -32,13 +33,15 @@ const UserRoutinePageScreen: React.FC<Props> = ({ route, navigation }) => {
     navigation.navigate("AddJournalScreen");
   };
 
-  const handleAddProduct = () => {};
+  const handleAddProduct = () => {
+    navigation.navigate("SearchToAddScreen", { routineId });
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <TouchableOpacity onPress={handleBackPress}>
-          <Text style={styles.titleText}>{"<"}</Text>
+          <AntDesign name="doubleleft" size={30} color="rgba(1,90,131,255)" />
         </TouchableOpacity>
         <Text style={[styles.titleText, styles.buttonMargin]}>
           {routineName}
