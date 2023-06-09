@@ -7,7 +7,6 @@ type User = {
 
 export default {
     async createUser(username: string, email:string, token:string, uid:string): Promise<User> {
-        console.log(username, email, token, uid)
         const userInfo = await prisma.users.create({
             data: {
                 username: username,
@@ -22,7 +21,6 @@ export default {
                 username: true,
             }
         })
-        console.log("user info", userInfo)
         return userInfo;
     }
 }
