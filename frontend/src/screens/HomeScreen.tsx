@@ -8,7 +8,22 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../navigation/types";
+
+type HomeScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "HomeScreen"
+>;
+
 const HomeScreen: React.FC = () => {
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+
+  const handleSkincareTypePress = (skincareType: string) => {
+    navigation.navigate("SkincareType", { skincareType });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -29,18 +44,30 @@ const HomeScreen: React.FC = () => {
       <Text style={styles.infoText}>browse by skin type</Text>
       <View style={styles.buttonContainer}>
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => handleSkincareTypePress("Acne")}
+          >
             <Text style={styles.buttonText}>Acne</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.buttonMargin]}>
+          <TouchableOpacity
+            style={[styles.button, styles.buttonMargin]}
+            onPress={() => handleSkincareTypePress("Dry")}
+          >
             <Text style={styles.buttonText}>Dry</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => handleSkincareTypePress("Oily")}
+          >
             <Text style={styles.buttonText}>Oily</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.buttonMargin]}>
+          <TouchableOpacity
+            style={[styles.button, styles.buttonMargin]}
+            onPress={() => handleSkincareTypePress("Sensitive")}
+          >
             <Text style={styles.buttonText}>Sensitive</Text>
           </TouchableOpacity>
         </View>
