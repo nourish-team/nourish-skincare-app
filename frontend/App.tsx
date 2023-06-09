@@ -1,22 +1,39 @@
+// Library and package imports
 import { StatusBar } from "expo-status-bar";
-
-import { StyleSheet, Text, View, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
 import * as Font from "expo-font";
 
 // Components
-import HomeScreen from "./src/screens/HomeScreen";
-import LoadingScreen from "./src/screens/LoadingScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import LoginScreen from "./src/screens/LoginScreen";
+import SignupScreen from "./src/screens/SignupScreen";
+import HomeScreen from "./src/screens/HomeScreen";
+import LoadingScreen from "./src/screens/LoadingScreen";
+import UserPageScreen from "./src/screens/UserPageScreen";
 
 // Context
 import { AppContext } from "./src/contexts/AppContext";
 
-// Stack
+// Tab & Stack
+const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+// App Tabs
+const Apptabs: React.FC = () => (
+  <Tab.Navigator
+    screenOptions={{
+      tabBarActiveTintColor: "white",
+      headerShown: false,
+      tabBarStyle: { backgroundColor: "rgba(1,90,131,255)" },
+    }}
+  >
+    <Tab.Screen name="Home" component={HomeScreen}></Tab.Screen>
+    <Tab.Screen name="UserPage" component={UserPageScreen}></Tab.Screen>
+  </Tab.Navigator>
+);
 
 export default function App() {
   // States
@@ -62,7 +79,8 @@ export default function App() {
           >
             <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="Signup" component={SignupScreen} />
+            <Stack.Screen name="HomeScreen" component={Apptabs} />
           </Stack.Navigator>
         </NavigationContainer>
       </AppContext.Provider>
