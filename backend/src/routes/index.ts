@@ -1,4 +1,5 @@
 import express, {Request, Response} from "express";
+import controllerSignup from '../controller/signup.controller'
 const router = express.Router();
 
 // GET
@@ -17,12 +18,11 @@ router.get('/routine/:skinType', (req: Request, res: Response) => {
 
 
 // POST req for login to post the 
-router.post('/login', (req: Request, res: Response) => {
+router.post('/login/session', (req: Request, res: Response) => {
     res.send("post token in login")
 })
-router.post('/signup', (req: Request, res: Response) => {
-    res.send("post username")
-})
+router.post('/signup', controllerSignup.createUser)
+
 router.post('/journal',  (req: Request, res: Response) => {
     res.send("post journal enteries")
 })
