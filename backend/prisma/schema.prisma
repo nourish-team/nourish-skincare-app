@@ -12,6 +12,7 @@ datasource db {
 
 model users {
   id           Int        @id @default(autoincrement())
+  username     String     @unique
   uid          String     @unique
   email        String     @unique
   access_token String     @unique
