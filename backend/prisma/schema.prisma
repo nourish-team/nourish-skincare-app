@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id           Int        @id @default(autoincrement())
+  uid          String     @unique
+  email        String     @unique
+  access_token String     @unique
+  created_at   DateTime   @default(now())
+  updated_at   DateTime
+  journals     journals[]
+  likes        likes[]
+}
+
+model routines {
+  id              Int        @id @default(autoincrement())
+  routine_name    String?
+  skin_type       String?
+  routine_product Int[]
+  public          Boolean
+  created_at      DateTime   @default(now())
+  updated_at      DateTime
+  journals        journals[]
+  likes           likes[]
+}
+
+model journals {
+  id          Int      @id @default(autoincrement())
+  routine_id  routines @relation(fields: [routines_id], references: [id])
+  routines_id Int
+  user_id     users    @relation(fields: [users_id], references: [id])
+  users_id    Int
+  comments    String?
+  date        DateTime
+  img_url     String
+  created_at  DateTime @default(now())
+  updated_at  DateTime
+}
+
+model products {
+  id           Int      @id @default(autoincrement())
+  brand        String
+  product_name String
+  ingredients  String[]
+  created_at   DateTime @default(now())
+  updated_at   DateTime
+}
+
+model likes {
+  id          Int      @id @default(autoincrement())
+  user_id     users    @relation(fields: [users_id], references: [id])
+  users_id    Int
+  routine_id  routines @relation(fields: [routines_id], references: [id])
+  routines_id Int
+  like        Boolean
+  created_at  DateTime @default(now())
+  updated_at  DateTime
+}
