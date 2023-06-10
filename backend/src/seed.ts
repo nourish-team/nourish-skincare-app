@@ -12,11 +12,11 @@ import {prisma, products} from "./utils/db.server"
 async function seedDatabase(): Promise<void> {
   try {
     const csvFiles: string[] = [
-      "../prisma/seeds/data/AB1.csv",
-      "../prisma/seeds/data/AB2.csv",
-      "../prisma/seeds/data/Prod1.csv",
-      "../prisma/seeds/data/Prod2.csv",
-      "../prisma/seeds/data/red1.csv",
+      "./prisma/seeds/data/AB1.csv",
+      "./prisma/seeds/data/AB2.csv",
+      "./prisma/seeds/data/Prod1.csv",
+      "./prisma/seeds/data/Prod2.csv",
+      "./prisma/seeds/data/red1.csv",
     ];
     for (const file of csvFiles) {
       const data: products[] = [];
