@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
 
-import loginService from "../service.ts/login.service";
+import loginService from "../service/login.service";
 
 export default {
     async updateAccessTokenLogin (req: Request, res: Response){
