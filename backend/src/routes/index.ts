@@ -4,6 +4,7 @@ const router = express.Router();
 
 import signupController from '../controller/signup.controller';
 import loginController from "../controller/login.controller";
+import productController from "../controller/product.controller";
 
 // SIGNUP
 router.post('/signup', signupController.createUser);
@@ -11,15 +12,16 @@ router.post('/signup', signupController.createUser);
 // LOGIN
 router.patch('/login/session/:id', loginController.updateAccessTokenLogin);
 
+//PRODUCTS
+router.get('/product/:brand', productController.getProductByName);
 
+router.get('/product/id/:id', productController.getProductById);
 
 // GET
 router.get('/journal/:routineId', (req: Request, res: Response) => {
     res.send("send back journal per routine")
 });
-router.get('/product/:name', (req: Request, res: Response) => {
-    res.send("send product by name")
-});
+
 router.get('/routine/:userId', (req: Request, res: Response) => {
     res.send("send routine by user id")
 });

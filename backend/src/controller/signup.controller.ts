@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express";
 import {body, validationResult} from "express-validator";
 
-import serviceSignup from '../service.ts/signup.service';
+import serviceSignup from '../service/signup.service';
 
 export default {
     async createUser (req: Request, res: Response){
