@@ -17,6 +17,7 @@ import SkincareTypeScreen from "./src/screens/SkinTypeScreen";
 import UserRoutinePageScreen from "./src/screens/UserRoutinePageScreen";
 import AddJournalScreen from "./src/screens/AddJournalScreen";
 import SearchToAddScreen from "./src/screens/SearchToAddScreen";
+import JournalHistoryScreen from "./src/screens/JournalHistoryScreen";
 
 // Nav
 import { RootStackParamList, MainTabParamList } from "./src/navigation/types";
@@ -100,6 +101,10 @@ export default function App() {
             <Stack.Screen
               name="SearchToAddScreen"
               component={SearchToAddScreen}
+            />
+            <Stack.Screen
+              name="JournalHistoryScreen"
+              component={JournalHistoryScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>
