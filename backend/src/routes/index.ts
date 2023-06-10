@@ -1,6 +1,17 @@
 import express, {Request, Response} from "express";
-import controllerSignup from '../controller/signup.controller'
+
 const router = express.Router();
+
+import signupController from '../controller/signup.controller';
+import loginController from "../controller/login.controller";
+
+// SIGNUP
+router.post('/signup', signupController.createUser);
+
+// LOGIN
+router.patch('/login/session/:id', loginController.updateAccessTokenLogin);
+
+
 
 // GET
 router.get('/journal/:routineId', (req: Request, res: Response) => {
@@ -18,10 +29,7 @@ router.get('/routine/:skinType', (req: Request, res: Response) => {
 
 
 // POST req for login to post the 
-router.post('/login/session', (req: Request, res: Response) => {
-    res.send("post token in login")
-})
-router.post('/signup', controllerSignup.createUser)
+
 
 router.post('/journal',  (req: Request, res: Response) => {
     res.send("post journal enteries")
@@ -31,9 +39,6 @@ router.post('/like',  (req: Request, res: Response) => {
 })
 
 // PATCH 
-router.patch('/login', (req: Request, res: Response) => {
-    res.send("patch token in login")
-})
 router.patch('/routine', (req: Request, res: Response) => {
     res.send("add products to routine")
 })
