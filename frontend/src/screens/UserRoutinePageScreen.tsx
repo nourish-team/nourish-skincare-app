@@ -33,6 +33,10 @@ const UserRoutinePageScreen: React.FC<Props> = ({ route, navigation }) => {
     navigation.navigate("AddJournalScreen");
   };
 
+  const handleJournalHistoryPress = () => {
+    navigation.navigate("JournalHistoryScreen", { routineId });
+  };
+
   const handleAddProduct = () => {
     navigation.navigate("SearchToAddScreen", { routineId });
   };
@@ -55,7 +59,10 @@ const UserRoutinePageScreen: React.FC<Props> = ({ route, navigation }) => {
           >
             <Text style={styles.buttonText}>Add Journal</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.buttonMargin]}>
+          <TouchableOpacity
+            style={[styles.button, styles.buttonMargin]}
+            onPress={handleJournalHistoryPress}
+          >
             <Text style={styles.buttonText}>Journal History</Text>
           </TouchableOpacity>
         </View>
