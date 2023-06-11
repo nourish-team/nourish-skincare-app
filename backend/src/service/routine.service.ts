@@ -15,5 +15,10 @@ export default {
         const parsedId: number = parseInt(id, 10);
         console.log(id);
         return routineModel.createRoutine(parsedId, routineName, skinType, parsedRoutine, routinePublic);
+    },
+
+    getRoutineBySkintype(skintype:string) {
+        return routineModel.getRoutineBySkintype(skintype)
     }
+
 }

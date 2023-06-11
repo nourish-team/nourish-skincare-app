@@ -10,5 +10,16 @@ export default {
             console.log(error);
             res.status(400)
         }
+    },
+
+    async getRoutineBySkintype(req: Request, res: Response) {
+        try {
+            const skinType:string = req.params.type;
+            const routinesBySkintype = await routineService.getRoutineBySkintype(skinType);
+            res.status(200).send(routinesBySkintype);
+            
+        } catch (error: any) {
+            console.error(error);
+        }
     }
 }

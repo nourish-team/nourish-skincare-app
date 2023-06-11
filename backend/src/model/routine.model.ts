@@ -26,5 +26,27 @@ export default {
             }
         })
         return routineData;
+    },
+
+    async getRoutineBySkintype(skintype:string) {
+        const routinesBySkintype = await prisma.routines.findMany({
+            where: {
+                skin_type: skintype,
+                public: true
+            },
+            select: {
+                id: true,
+                user_id: {
+                    select: {
+                        id: true,
+                        username: true,
+                    }
+                },
+                routine_name: true,
+                routine_product: true,
+                created_at: true
+            }
+        })
+        return routinesBySkintype;
     }
 }

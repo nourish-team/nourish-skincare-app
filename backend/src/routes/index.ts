@@ -19,12 +19,11 @@ router.get('/product/id/:id', productController.getProductById);
 
 // ROUTINE
 router.post('/routine/create', routineController.createRoutine);
+router.get('/routine/skintype/:type', routineController.getRoutineBySkintype);
 router.get('/routine/user/:id', (req: Request, res: Response) => {
     res.send("send routine by user id")
 });
-router.get('/routine/skintype/:type', (req: Request, res: Response) => {
-    res.send("send routine by user id")
-});
+
 
 // JOURNAL
 router.get('/journal/:routineId', (req: Request, res: Response) => {
