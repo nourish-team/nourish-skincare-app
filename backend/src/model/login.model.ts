@@ -9,13 +9,11 @@ export default {
                 id: userId,
             }, 
             data: {
-                access_token: token,
                 updated_at: japanTime,
             },
             select: {
                 id: true,
                 username: true,
-                access_token: true
             }
         })
         return updateToken;
