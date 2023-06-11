@@ -20,6 +20,7 @@ export default {
             
         } catch (error: any) {
             console.error(error);
+            res.status(400)
         }
     },
 

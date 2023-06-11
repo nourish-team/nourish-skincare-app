@@ -44,8 +44,8 @@ model journals {
   user_id     users    @relation(fields: [users_id], references: [id])
   users_id    Int
   comments    String?
-  date        DateTime
-  img_url     String
+  date        String
+  img_url     String?
   created_at  String
   updated_at  String
 }

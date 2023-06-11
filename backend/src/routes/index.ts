@@ -6,6 +6,7 @@ import signupController from '../controller/signup.controller';
 import loginController from "../controller/login.controller";
 import productController from "../controller/product.controller";
 import routineController from "../controller/routine.controller";
+import journalController from "../controller/journal.controller";
 
 // SIGNUP
 router.post('/signup', signupController.createUser);
@@ -24,12 +25,11 @@ router.get('/routine/user/:id', routineController.getRoutineByUserId);
 
 
 // JOURNAL
+router.post('/journal/routine', journalController.createJournalRoutine);
 router.get('/journal/:routineId', (req: Request, res: Response) => {
     res.send("send back journal per routine")
 });
-router.post('/journal/routine/:id',  (req: Request, res: Response) => {
-    res.send("post journal enteries")
-})
+
 
 // LIKES
 router.post('/like/routine/:id',  (req: Request, res: Response) => {
