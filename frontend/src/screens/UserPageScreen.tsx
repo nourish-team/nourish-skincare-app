@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../navigation/types";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { AntDesign } from "@expo/vector-icons";
 
 type UserPageScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -32,6 +33,10 @@ const UserPageScreen: React.FC = () => {
     navigation.navigate("UserRoutinePageScreen", { routineId, routineName });
   };
 
+  const handleCreateNewRoutinePress = () => {
+    navigation.navigate("CreateNewRoutineScreen");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -49,6 +54,11 @@ const UserPageScreen: React.FC = () => {
       >
         <Text>{"Summer 2020"}</Text>
       </TouchableOpacity>
+      <View style={styles.createButtonContainer}>
+        <TouchableOpacity onPress={handleCreateNewRoutinePress}>
+          <AntDesign name="pluscircle" size={50} color="rgba(1,90,131,255)" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -117,6 +127,11 @@ const styles = StyleSheet.create({
   },
   buttonMargin: {
     marginLeft: 25,
+  },
+  createButtonContainer: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
   },
 });
 

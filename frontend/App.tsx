@@ -18,6 +18,7 @@ import UserRoutinePageScreen from "./src/screens/UserRoutinePageScreen";
 import AddJournalScreen from "./src/screens/AddJournalScreen";
 import SearchToAddScreen from "./src/screens/SearchToAddScreen";
 import JournalHistoryScreen from "./src/screens/JournalHistoryScreen";
+import CreateNewRoutineScreen from "./src/screens/CreateNewRoutineScreen";
 
 // Nav
 import { RootStackParamList, MainTabParamList } from "./src/navigation/types";
@@ -105,6 +106,10 @@ export default function App() {
             <Stack.Screen
               name="JournalHistoryScreen"
               component={JournalHistoryScreen}
+            />
+            <Stack.Screen
+              name="CreateNewRoutineScreen"
+              component={CreateNewRoutineScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>
