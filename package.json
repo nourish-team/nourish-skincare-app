@@ -1,0 +1,8 @@
+{
+    "name": "nourish-skincare-app",
+    "private": true,
+    "workspaces": [
+      "backend"
+    ]
+  }
+  
