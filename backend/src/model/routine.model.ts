@@ -51,7 +51,7 @@ export default {
     async getRoutineByUserId(userId:number) {
         const routinesByUser = await prisma.routines.findMany({
             where: {
-                user_id: {id: userId},
+                users_id: userId
             },
             select: {
                 id: true,

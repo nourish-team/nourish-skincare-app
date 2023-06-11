@@ -23,9 +23,9 @@ export default {
         }
     },
 
-    async getRoutineByUserId(req: Request<{id: number}>, res: Response) {
+    async getRoutineByUserId(req: Request<{id: string}>, res: Response) {
         try {
-            const userId:number = req.params.id;
+            const userId = req.params.id;
             const routinesByUser = await routineService.getRoutineByUserId(userId);
             res.status(200).send(routinesByUser);
         } catch (error:any) {
