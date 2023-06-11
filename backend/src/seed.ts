@@ -3,10 +3,12 @@ console.log("Hello TS file ran");
 import * as fs from "fs";
 import csv from "csv-parser"
 
-import {prisma, products} from "./utils/db.server"
+import {prisma, products} from "./utils/db.server";
+
 
 async function seedDatabase(): Promise<void> {
   try {
+    const japanTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Tokyo" })
     const csvFiles: string[] = [
       "./prisma/seeds/data/AB1.csv",
       "./prisma/seeds/data/AB2.csv",
@@ -25,8 +27,8 @@ async function seedDatabase(): Promise<void> {
               brand: row["brand"].toLowerCase(),
               product_name: row["product_name"].toLowerCase(),
               ingredients: row["ingredients"],
-              created_at: new Date(),
-              updated_at: new Date(),
+              created_at: japanTime,
+              updated_at: japanTime,
             };
             await prisma.products.create({
               data: newData,
