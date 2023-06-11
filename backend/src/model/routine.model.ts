@@ -1,7 +1,5 @@
 import {prisma} from "../utils/db.server"
 
-
-
 export default {
     async createRoutine(id:number, routineName: string, skinType:string, routineProduct:number[], routinePublic:boolean) {
         const japanTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Tokyo" });
@@ -48,5 +46,21 @@ export default {
             }
         })
         return routinesBySkintype;
+    }, 
+
+    async getRoutineByUserId(userId:number) {
+        const routinesByUser = await prisma.routines.findMany({
+            where: {
+                user_id: {id: userId},
+            },
+            select: {
+                id: true,
+                routine_name: true,
+                routine_product: true,
+                created_at: true
+            }
+        })
+
+        return routinesByUser;
     }
 }

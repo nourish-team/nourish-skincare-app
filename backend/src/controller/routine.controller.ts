@@ -21,5 +21,16 @@ export default {
         } catch (error: any) {
             console.error(error);
         }
+    },
+
+    async getRoutineByUserId(req: Request<{id: number}>, res: Response) {
+        try {
+            const userId:number = req.params.id;
+            const routinesByUser = await routineService.getRoutineByUserId(userId);
+            res.status(200).send(routinesByUser);
+        } catch (error:any) {
+            console.error(error);
+            res.status(400).send("user doesn't have any routines")
+        }
     }
 }

@@ -19,6 +19,11 @@ export default {
 
     getRoutineBySkintype(skintype:string) {
         return routineModel.getRoutineBySkintype(skintype)
+    },
+
+    getRoutineByUserId(userId:number) {
+        // const parsedId: number = parseInt(userId, 10);
+        return routineModel.getRoutineByUserId(userId);
     }
 
 }
