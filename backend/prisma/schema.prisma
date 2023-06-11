@@ -25,16 +25,16 @@ model users {
 
 model routines {
   id              Int        @id @default(autoincrement())
-  user_id         users      @relation(fields: [usersId], references: [id])
+  user_id         users      @relation(fields: [users_id], references: [id])
   routine_name    String?
-  skin_type       String?
+  skin_type       String
   routine_product Int[]
   public          Boolean
   created_at      String
   updated_at      String
   journals        journals[]
   likes           likes[]
-  usersId         Int
+  users_id        Int
 }
 
 model journals {
