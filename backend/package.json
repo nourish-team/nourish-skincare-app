@@ -9,7 +9,10 @@
   "scripts": {
     "start": "node build/server.js",
     "dev": "nodemon src/server.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "prisma:generate": "npx prisma generate",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:seed": "npx prisma db seed"
   },
   "keywords": [],
   "author": "",
