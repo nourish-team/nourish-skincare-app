@@ -19,28 +19,23 @@ router.get('/product/id/:id', productController.getProductById);
 
 // ROUTINE
 router.post('/routine/create', routineController.createRoutine);
-router.get('/routine/:userId', (req: Request, res: Response) => {
+router.get('/routine/user/:id', (req: Request, res: Response) => {
+    res.send("send routine by user id")
+});
+router.get('/routine/skintype/:type', (req: Request, res: Response) => {
     res.send("send routine by user id")
 });
 
-router.get('/routine/:skinType', (req: Request, res: Response) => {
-    res.send("send routine by user id")
-});
-
-// GET
+// JOURNAL
 router.get('/journal/:routineId', (req: Request, res: Response) => {
     res.send("send back journal per routine")
 });
-
-
-
-// POST req for login to post the 
-
-
-router.post('/journal',  (req: Request, res: Response) => {
+router.post('/journal/routine/:id',  (req: Request, res: Response) => {
     res.send("post journal enteries")
 })
-router.post('/like',  (req: Request, res: Response) => {
+
+// LIKES
+router.post('/like/routine/:id',  (req: Request, res: Response) => {
     res.send("post like")
 })
 
