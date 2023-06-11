@@ -16,22 +16,25 @@ model users {
   uid          String     @unique
   email        String     @unique
   access_token String     @unique
-  created_at   DateTime   @default(now())
-  updated_at   DateTime
+  created_at   String
+  updated_at   String
   journals     journals[]
   likes        likes[]
+  routines     routines[]
 }
 
 model routines {
   id              Int        @id @default(autoincrement())
+  user_id         users      @relation(fields: [usersId], references: [id])
   routine_name    String?
   skin_type       String?
   routine_product Int[]
   public          Boolean
-  created_at      DateTime   @default(now())
-  updated_at      DateTime
+  created_at      String
+  updated_at      String
   journals        journals[]
   likes           likes[]
+  usersId         Int
 }
 
 model journals {
@@ -41,10 +44,10 @@ model journals {
   user_id     users    @relation(fields: [users_id], references: [id])
   users_id    Int
   comments    String?
-  date        DateTime
+  date        String
   img_url     String
-  created_at  DateTime @default(now())
-  updated_at  DateTime
+  created_at  String
+  updated_at  String
 }
 
 model products {
@@ -52,8 +55,8 @@ model products {
   brand        String
   product_name String
   ingredients  String[]
-  created_at   DateTime @default(now())
-  updated_at   DateTime
+  created_at   String
+  updated_at   String
 }
 
 model likes {
@@ -63,6 +66,6 @@ model likes {
   routine_id  routines @relation(fields: [routines_id], references: [id])
   routines_id Int
   like        Boolean
-  created_at  DateTime @default(now())
-  updated_at  DateTime
+  created_at  String
+  updated_at  String
 }
