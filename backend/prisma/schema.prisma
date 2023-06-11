@@ -11,16 +11,15 @@ datasource db {
 }
 
 model users {
-  id           Int        @id @default(autoincrement())
-  username     String     @unique
-  uid          String     @unique
-  email        String     @unique
-  access_token String     @unique
-  created_at   String
-  updated_at   String
-  journals     journals[]
-  likes        likes[]
-  routines     routines[]
+  id         Int        @id @default(autoincrement())
+  username   String     @unique
+  uid        String     @unique
+  email      String     @unique
+  created_at String
+  updated_at String
+  journals   journals[]
+  likes      likes[]
+  routines   routines[]
 }
 
 model routines {
