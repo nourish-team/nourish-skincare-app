@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useContext} from "react";
 import {
   View,
   Text,
@@ -9,29 +9,63 @@ import {
 } from "react-native";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import UserContext from "../contexts/UserContext";
+
+const auth = getAuth();
 
 const LoginScreen: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const {setUserId, setUserName} = useContext(UserContext);
+
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const handleBackPress = () => {
     navigation.navigate("WelcomeScreen");
   };
 
-  const handleLoginButtonPress = () => {
+  const handleTestLoginButtonPress = () => {
     navigation.navigate("HomeScreen");
   };
+
+  const handleLoginButtonPress = async () => {
+    if (email === "" || password === "") {
+      setError(true);
+      return;
+    }
+
+    setError(false);
+
+    try {
+      const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+      if (userCredentials.user !== null) {
+        alert("Login successful!");
+        setEmail("");
+        setPassword("");
+      } else {
+        setError(true);
+      }
+    } catch (error) {
+      // console.error(error);
+      setError(true);
+    }
+  }
 
   return (
     <View style={styles.container}>
       <Text>login</Text>
       <Text style={styles.signupText}>email</Text>
-      <TextInput style={styles.inputContainer}></TextInput>
+      <TextInput style={styles.inputContainer} value={email} onChangeText={(input) => setEmail(input)}></TextInput>
       <Text>password</Text>
-      <TextInput style={styles.inputContainer}></TextInput>
-      <TouchableOpacity style={styles.buttonContainer}>
+      <TextInput style={styles.inputContainer} value={password} onChangeText={(input) => setPassword(input)} secureTextEntry></TextInput>
+      <TouchableOpacity style={styles.buttonContainer} onPress={handleLoginButtonPress}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      <Button title="Submit" onPress={handleLoginButtonPress}></Button>
+      {error ? <Text>Oops, something went wrong</Text>: null}
+      
+      <Button title="Submit" onPress={handleTestLoginButtonPress}></Button>
       <Button title="Back" onPress={handleBackPress} />
     </View>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -9,31 +9,100 @@ import {
 } from "react-native";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import UserContext from "../contexts/UserContext";
+
+const auth = getAuth();
 
 const SignupScreen: React.FC = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const {setUserId, setUserName} = useContext(UserContext);
+
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const handleBackPress = () => {
     navigation.navigate("WelcomeScreen");
   };
 
-  const handleSignupButtonPress = () => {
+  const handleTestSignupButtonPress = () => {
     navigation.navigate("HomeScreen");
   };
+
+  const handleSignupButtonPress = async () => {
+    if (name === "" || email === "" || password === "") {
+      setError(true);
+      return;
+    } 
+
+    setError(false);
+
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+      const user = await userCredentials.user;
+      const accessToken = await user.getIdToken();
+      console.log("USER UID", user.uid);
+      alert("Sign Up successful!")
+
+      const response = await fetch('http://10.0.2.2:8080/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: name,
+          email: email,
+          token: accessToken,
+          uid: user.uid,
+        }),
+      });
+
+      if (response.ok) {
+        const {id, username} = await response.json();
+        console.log("username ", username);
+        setUserId(id);
+        setUserName(username);
+      }
+
+    } catch (error) {
+      console.error(error);
+      setError(true);
+    } finally {
+      setEmail("");
+      setPassword("");
+    }
+  }
 
   return (
     <View style={styles.container}>
       <Text>sign up</Text>
       <Text style={styles.signupText}>name</Text>
-      <TextInput style={styles.inputContainer}></TextInput>
+      <TextInput
+        style={styles.inputContainer}
+        value={name}
+        onChangeText={(input) => setName(input)}
+      />
       <Text style={styles.signupText}>email</Text>
-      <TextInput style={styles.inputContainer}></TextInput>
+      <TextInput
+        style={styles.inputContainer}
+        value={email}
+        onChangeText={(input) => setEmail(input)}
+      />
       <Text>password</Text>
-      <TextInput style={styles.inputContainer}></TextInput>
-      <TouchableOpacity style={styles.buttonContainer}>
+      <TextInput
+        style={styles.inputContainer}
+        value={password}
+        onChangeText={(input) => setPassword(input)}
+        secureTextEntry
+      />
+      <TouchableOpacity style={styles.buttonContainer} onPress={handleSignupButtonPress}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-      <Button title="Submit" onPress={handleSignupButtonPress}></Button>
+      {error ? <Text>Oops, something went wrong</Text>: null}
+
+      <Button title="Submit" onPress={handleTestSignupButtonPress}></Button>
       <Button title="Back" onPress={handleBackPress} />
     </View>
   );
