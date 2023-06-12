@@ -27,7 +27,7 @@ router.get('/routine/user/:id', routineController.getRoutineByUserId);
 
 // JOURNAL
 router.post('/journal/routine', journalController.createJournalRoutine);
-// /journal/routine/user/?userid=1&routineid=1
+// /journal/routine/user/?userid=1&routineid=1 
 router.get('/journal/routine/user/', journalController.getJournalData);
 
 
