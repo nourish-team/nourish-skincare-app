@@ -1,8 +1,15 @@
-import React, { SetStateAction, useContext, useEffect, useState } from "react";
+import React, {
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../navigation/types";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useFocusEffect } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import UserContext from "../contexts/UserContext";
 
@@ -21,11 +28,17 @@ const UserPageScreen: React.FC = () => {
     fetchRoutines();
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      fetchRoutines();
+    }, [])
+  );
+
   const fetchRoutines = async () => {
     try {
       const response = await fetch(
         `http://10.0.2.2:8080/routine/user/${userId}`
-      ); //put in route later
+      );
       const data = await response.json();
       setUserRoutines(data);
     } catch (error) {
@@ -33,8 +46,16 @@ const UserPageScreen: React.FC = () => {
     }
   };
 
-  const handleRoutinePress = (routineId: number, routineName: string) => {
-    navigation.navigate("UserRoutinePageScreen", { routineId, routineName });
+  const handleRoutinePress = (
+    routineId: number,
+    routineName: string,
+    routineProduct: number[]
+  ) => {
+    navigation.navigate("UserRoutinePageScreen", {
+      routineId,
+      routineName,
+      routineProduct,
+    });
   };
 
   const handleCreateNewRoutinePress = () => {
@@ -52,19 +73,20 @@ const UserPageScreen: React.FC = () => {
       </View>
       <View style={styles.line} />
       <Text style={styles.infoText}>My Routines</Text>
-      <TouchableOpacity
-        key={1}
-        onPress={() => handleRoutinePress(1, "Summer 2020")}
-      >
-        <Text>{"Summer 2020"}</Text>
-      </TouchableOpacity>
       {fetchRoutinesError ? (
         <Text>There was an error fetching routines</Text>
       ) : null}
       {userRoutines.map((routine) => (
         <TouchableOpacity
+          style={styles.card}
           key={routine.id}
-          onPress={() => handleRoutinePress(routine.id, routine.routine_name)}
+          onPress={() =>
+            handleRoutinePress(
+              routine.id,
+              routine.routine_name,
+              routine.routine_product
+            )
+          }
         >
           <Text>{routine.routine_name}</Text>
         </TouchableOpacity>
@@ -147,6 +169,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     right: 20,
+  },
+  card: {
+    backgroundColor: "#FFF",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "rgba(1, 90, 131, 255)",
   },
 });
 

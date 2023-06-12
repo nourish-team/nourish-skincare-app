@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -23,7 +23,8 @@ type Props = {
 };
 
 const UserRoutinePageScreen: React.FC<Props> = ({ route, navigation }) => {
-  const { routineId, routineName } = route.params;
+  const { routineId, routineName, routineProduct } = route.params;
+  const [products, setProducts] = useState([]);
 
   const handleBackPress = () => {
     navigation.navigate("HomeScreen");
@@ -40,6 +41,32 @@ const UserRoutinePageScreen: React.FC<Props> = ({ route, navigation }) => {
   const handleAddProduct = () => {
     navigation.navigate("SearchToAddScreen", { routineId });
   };
+
+  const fetchProductName = async (id) => {
+    try {
+      const response = await fetch(`http://10.0.2.2:8080/product/id/${id}`);
+      const data = await response.json();
+      console.log("DATA ", data);
+      const newProduct = data.product_name;
+      setProducts((prevProducts) => [...prevProducts, newProduct]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDisplayProducts = () => {
+    console.log("routineProduct ", routineProduct);
+    for (const pid of routineProduct) {
+      console.log("pid ", pid);
+      fetchProductName(pid);
+    }
+  };
+
+  useEffect(() => {
+    if (routineProduct) {
+      handleDisplayProducts();
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -70,6 +97,11 @@ const UserRoutinePageScreen: React.FC<Props> = ({ route, navigation }) => {
       <TouchableOpacity onPress={handleAddProduct}>
         <Text style={styles.infoText}>Add Product</Text>
       </TouchableOpacity>
+      {products.map((product, index) => (
+        <Text key={index} style={styles.card}>
+          {product}
+        </Text>
+      ))}
     </View>
   );
 };
@@ -138,6 +170,14 @@ const styles = StyleSheet.create({
   },
   buttonMargin: {
     marginLeft: 25,
+  },
+  card: {
+    backgroundColor: "#FFF",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "rgba(1, 90, 131, 255)",
   },
 });
 
