@@ -27,9 +27,8 @@ router.get('/routine/user/:id', routineController.getRoutineByUserId);
 
 // JOURNAL
 router.post('/journal/routine', journalController.createJournalRoutine);
-router.get('/journal/:routineId', (req: Request, res: Response) => {
-    res.send("send back journal per routine")
-});
+// /journal/routine/user/?userid=1&routineid=1
+router.get('/journal/routine/user/', journalController.getJournalData);
 
 
 // LIKES
