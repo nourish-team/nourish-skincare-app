@@ -17,5 +17,18 @@ export default {
             }
         })
         return updateToken;
+    },
+
+    async getUserData(email:string) {
+        const userData = await prisma.users.findFirst({
+            where: {
+                email: email
+            },
+            select: {
+                id: true,
+                username: true,
+            }
+        })
+        return userData;
     }
 }
