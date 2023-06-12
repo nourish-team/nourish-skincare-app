@@ -24,6 +24,7 @@ router.get('/product/id/:id', productController.getProductById);
 router.post('/routine/create', routineController.createRoutine);
 router.get('/routine/skintype/:type', routineController.getRoutineBySkintype);
 router.get('/routine/user/:id', routineController.getRoutineByUserId);
+router.patch('/routine/update', routineController.updateRoutineUser);
 
 
 // JOURNAL
@@ -34,12 +35,7 @@ router.get('/journal/routine/user/', journalController.getJournalData);
 
 // LIKES
 router.post('/like/routine',  likesController.createLike);
-router.get('/like/total/:routineid', likesController.getTotalLikes)
-
-// PATCH 
-router.patch('/routine', (req: Request, res: Response) => {
-    res.send("add products to routine")
-})
+router.get('/like/total/:routineid', likesController.getTotalLikes);
 
 // DELETE
 router.delete('/routine', (req: Request, res: Response) => {

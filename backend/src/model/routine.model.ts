@@ -62,5 +62,23 @@ export default {
         })
 
         return routinesByUser;
-    }
+    },
+     async updateRoutineUser(parsedRoutineId: number, parsedRoutine: number[] | undefined, routinePublicBoolean: boolean | undefined) {
+        const newData = await prisma.routines.update({
+            where: {
+                id: parsedRoutineId
+            },
+            data: {
+                routine_product: parsedRoutine,
+                public: routinePublicBoolean
+            },
+            select: {
+                routine_name: true,
+                routine_product: true,
+                public: true,
+            }
+        })
+
+        return newData;
+     }
 }

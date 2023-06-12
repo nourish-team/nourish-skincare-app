@@ -33,5 +33,15 @@ export default {
             console.error(error);
             res.status(400).send("user doesn't have any routines")
         }
+    },
+
+    async updateRoutineUser(req: Request, res: Response) {
+        try {
+            const updateData = await routineService.updateRoutineUser(req.body);
+            res.status(200).send(updateData);
+        } catch (error) {
+            console.error(error);
+            res.status(400).send("Could not update");
+        }
     }
 }
