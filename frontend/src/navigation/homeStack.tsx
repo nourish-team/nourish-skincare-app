@@ -11,6 +11,7 @@ import AddJournalScreen from '../screens/AddJournalScreen';
 import SearchToAddScreen from '../screens/SearchToAddScreen';
 import JournalHistoryScreen from '../screens/JournalHistoryScreen';
 import CreateNewRoutineScreen from '../screens/CreateNewRoutineScreen';
+import SearchToAddNewScreen from '../screens/SearchToAddNewScreen';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -41,6 +42,7 @@ const HomeStack: React.FC = () => (
     <Stack.Screen name="SearchToAddScreen" component={SearchToAddScreen} />
     <Stack.Screen name="JournalHistoryScreen" component={JournalHistoryScreen} />
     <Stack.Screen name="CreateNewRoutineScreen" component={CreateNewRoutineScreen} />
+    <Stack.Screen name="SearchToAddNewScreen" component={SearchToAddNewScreen}/>
   </Stack.Navigator>
 );
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,14 @@ import {
 } from "react-native";
 import { RootStackParamList } from "../navigation/types";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from "@react-navigation/native";
+import ItemsContext from "../contexts/ItemsContext";
+import SearchToAddNewScreen from "./SearchToAddNewScreen";
+
+type CreateNewRoutineRouteProp = RouteProp<
+  RootStackParamList,
+  "CreateNewRoutineScreen"
+>;
 
 type CreateNewRoutineNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -15,18 +23,40 @@ type CreateNewRoutineNavigationProp = StackNavigationProp<
 >;
 
 type Prop = {
+  route: CreateNewRoutineRouteProp;
   navigation: CreateNewRoutineNavigationProp;
 };
 
-const CreateNewRoutineScreen: React.FC<Prop> = ({ navigation }) => {
+const CreateNewRoutineScreen: React.FC<Prop> = ({ route, navigation }) => {
+  const { selectedItems } = route.params || { selectedItems: [] };
+  const [savedItems, setSavedItems] = useState<
+    (number | { itemId: number; itemName: string })[]
+  >([]);
+
+  useEffect(() => {
+    if (selectedItems && selectedItems.length > 0) {
+      setSavedItems((prevSavedItems) => [...prevSavedItems, ...selectedItems]);
+    }
+  }, [selectedItems]);
+
   const handleCancelButtonPress = () => {
     navigation.navigate("HomeScreen");
+  };
+
+  const handleAddProductsPress = () => {
+    navigation.navigate("SearchToAddNewScreen");
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}>Name your new routine!</Text>
       <TextInput style={styles.searchBox}></TextInput>
+      <TouchableOpacity
+        style={styles.createButton}
+        onPress={handleAddProductsPress}
+      >
+        <Text style={styles.createButtonText}>Add Products</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.createButton}>
         <Text style={styles.createButtonText}>Create new routine</Text>
       </TouchableOpacity>
@@ -36,6 +66,15 @@ const CreateNewRoutineScreen: React.FC<Prop> = ({ navigation }) => {
       >
         <Text style={styles.cancelButtonText}>Cancel</Text>
       </TouchableOpacity>
+      {savedItems && savedItems.length > 0 ? (
+        savedItems.map((item) => (
+          <Text key={typeof item === "number" ? item : item.itemId}>
+            {typeof item === "number" ? item : item.itemName}
+          </Text>
+        ))
+      ) : (
+        <Text>No selected items</Text>
+      )}
     </View>
   );
 };
