@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
   View,
   Image,
@@ -11,6 +11,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation/types";
+import UserContext from "../contexts/UserContext";
 
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -18,6 +19,8 @@ type HomeScreenNavigationProp = StackNavigationProp<
 >;
 
 const HomeScreen: React.FC = () => {
+  const {userId, userName} = useContext(UserContext);
+
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
   const handleSkincareTypePress = (skincareType: string) => {
@@ -35,7 +38,7 @@ const HomeScreen: React.FC = () => {
       </View>
       <View style={styles.line} />
       <Text style={styles.infoText}>
-        Hello Beautiful... Lorem ipsum, dolor sit amet consectetur adipisicing
+        Hello {userName}... Lorem ipsum, dolor sit amet consectetur adipisicing
         elit. Ipsa modi placeat dolor, obcaecati quod impedit incidunt nesciunt
         deleniti sequi odit aperiam aliquam repellat aliquid numquam
         reprehenderit, quas quae enim repudiandae.
