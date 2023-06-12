@@ -28,6 +28,28 @@ export default {
         })
 
         return newJournalEntrie;
+    },
+
+    async getJournalData(parsedUserId: number, parsedRoutineId: number) {
+        const journalData = await prisma.journals.findMany({
+            where: {
+                users_id: parsedUserId,
+                routines_id: parsedRoutineId
+            },
+            select: {
+                comments: true,
+                routine_id:  {
+                    select: {
+                        routine_name: true,
+                        skin_type: true,
+                        routine_product: true,
+                    }
+                },
+                date: true,
+                img_url: true
+            }
+        })
+        return journalData;
     }
 }
 
