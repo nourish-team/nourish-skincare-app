@@ -41,10 +41,7 @@ const SignupScreen: React.FC = () => {
 
     try {
       const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
-      const user = await userCredentials.user;
-      const accessToken = await user.getIdToken();
-      console.log("USER UID", user.uid);
-      alert("Sign Up successful!")
+      const user = userCredentials.user;
 
       const response = await fetch('http://10.0.2.2:8080/signup', {
         method: 'POST',
@@ -54,7 +51,6 @@ const SignupScreen: React.FC = () => {
         body: JSON.stringify({
           username: name,
           email: email,
-          token: accessToken,
           uid: user.uid,
         }),
       });
@@ -64,6 +60,7 @@ const SignupScreen: React.FC = () => {
         console.log("username ", username);
         setUserId(id);
         setUserName(username);
+        alert("Sign Up successful!")
       }
 
     } catch (error) {

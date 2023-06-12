@@ -40,10 +40,28 @@ const LoginScreen: React.FC = () => {
 
     try {
       const userCredentials = await signInWithEmailAndPassword(auth, email, password);
-      if (userCredentials.user !== null) {
+      const user = userCredentials.user;
+
+      if (user !== null) {
+        const response = await fetch('http://10.0.2.2:8080/login/user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+        }),
+      })
+
+      if (response.ok) {
+        const {id, username} = await response.json();
+        console.log("USERNAME ", username);
+        setUserId(id);
+        setUserName(username);
         alert("Login successful!");
         setEmail("");
         setPassword("");
+      }
       } else {
         setError(true);
       }
