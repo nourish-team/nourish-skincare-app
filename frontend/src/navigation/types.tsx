@@ -5,7 +5,11 @@ export type RootStackParamList = {
   HomeScreen: undefined;
   SkincareType: { skincareType: string };
   UserPageScreen: undefined;
-  UserRoutinePageScreen: { routineId: number; routineName: string };
+  UserRoutinePageScreen: {
+    routineId: number;
+    routineName: string;
+    routineProduct: number[];
+  };
   AddJournalScreen: { routineId: number };
   SearchToAddScreen: { routineId: number };
   JournalHistoryScreen: { routineId: number };
