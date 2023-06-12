@@ -30,7 +30,7 @@ const UserRoutinePageScreen: React.FC<Props> = ({ route, navigation }) => {
   };
 
   const handleAddJournalPress = () => {
-    navigation.navigate("AddJournalScreen");
+    navigation.navigate("AddJournalScreen", { routineId });
   };
 
   const handleJournalHistoryPress = () => {

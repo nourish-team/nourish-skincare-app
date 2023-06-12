@@ -6,10 +6,11 @@ export type RootStackParamList = {
   SkincareType: { skincareType: string };
   UserPageScreen: undefined;
   UserRoutinePageScreen: { routineId: number; routineName: string };
-  AddJournalScreen: undefined;
+  AddJournalScreen: { routineId: number };
   SearchToAddScreen: { routineId: number };
   JournalHistoryScreen: { routineId: number };
   CreateNewRoutineScreen: undefined;
+  SearchToAddNewScreen: undefined;
 };
 
 export type MainTabParamList = {
