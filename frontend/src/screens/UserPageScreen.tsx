@@ -1,9 +1,10 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../navigation/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AntDesign } from "@expo/vector-icons";
+import UserContext from "../contexts/UserContext";
 
 type UserPageScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -13,6 +14,7 @@ type UserPageScreenNavigationProp = StackNavigationProp<
 const UserPageScreen: React.FC = () => {
   const [userRoutines, setUserRoutines] = useState<any[]>([]);
   const [fetchRoutinesError, setFetchRoutinesError] = useState(false);
+  const { userId } = useContext(UserContext);
   const navigation = useNavigation<UserPageScreenNavigationProp>();
 
   useEffect(() => {
@@ -21,7 +23,9 @@ const UserPageScreen: React.FC = () => {
 
   const fetchRoutines = async () => {
     try {
-      const response = await fetch(""); //put in route later
+      const response = await fetch(
+        `http://10.0.2.2:8080/routine/user/${userId}`
+      ); //put in route later
       const data = await response.json();
       setUserRoutines(data);
     } catch (error) {
@@ -54,6 +58,17 @@ const UserPageScreen: React.FC = () => {
       >
         <Text>{"Summer 2020"}</Text>
       </TouchableOpacity>
+      {fetchRoutinesError ? (
+        <Text>There was an error fetching routines</Text>
+      ) : null}
+      {userRoutines.map((routine) => (
+        <TouchableOpacity
+          key={routine.id}
+          onPress={() => handleRoutinePress(routine.id, routine.routine_name)}
+        >
+          <Text>{routine.routine_name}</Text>
+        </TouchableOpacity>
+      ))}
       <View style={styles.createButtonContainer}>
         <TouchableOpacity onPress={handleCreateNewRoutinePress}>
           <AntDesign name="pluscircle" size={50} color="rgba(1,90,131,255)" />
