@@ -30,27 +30,6 @@ export default {
 
     updateRoutineUser(updateData: UpdateRoutine) {
         const {routine_id: routineId, routine_product: routineProduct, public: routinePublic} = updateData;
-        // const parsedRoutineId: number = parseInt(routineId, 10);
-        // let parsedRoutine: number[] | undefined; 
-
-        // if(routineProduct) {
-        //   parsedRoutine  = JSON.parse(routineProduct);
-        // } else {
-        //  parsedRoutine = undefined;
-        // }
-        
-        // let routinePublicBoolean: boolean | undefined;
-        // console.log("outside the if", routinePublic)
-        // if(routinePublic === "true") {
-        //     routinePublicBoolean = Boolean(routinePublic);
-            
-        // } else if (routinePublic === "false") {
-        //     routinePublicBoolean = false;
-        // } else {
-        //     routinePublicBoolean = undefined;
-        // }
-
-        
         return routineModel.updateRoutineUser(routineId, routineProduct, routinePublic);
     }
 
