@@ -45,7 +45,8 @@ export default {
                         routine_product: true,
                     }
                 },
-                date: true
+                date: true,
+                img_url: true
             }
         })
         return journalData;
