@@ -33,7 +33,8 @@ router.get('/journal/routine/user/', journalController.getJournalData);
 
 
 // LIKES
-router.post('/like/routine',  likesController.createLike)
+router.post('/like/routine',  likesController.createLike);
+router.get('/like/total/:routineid', likesController.getTotalLikes)
 
 // PATCH 
 router.patch('/routine', (req: Request, res: Response) => {

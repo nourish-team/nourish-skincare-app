@@ -23,5 +23,18 @@ export default {
         })
 
         return newLikeData;
+    },
+
+    async getTotalLikes(parsedRoutineId: number) {
+        const totalLikes = prisma.likes.count({
+            where: {
+                routines_id: parsedRoutineId
+            },
+            select: {
+                like: true
+            }
+        
+        })
+        return totalLikes;
     }
 }

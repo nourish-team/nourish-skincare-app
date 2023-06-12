@@ -12,5 +12,10 @@ export default {
         const parsedRoutineId = parseInt(routineId, 10);
         const likeBoolean = Boolean(like);
         return likesModel.createLike(parsedId, parsedRoutineId, likeBoolean);
+    },
+
+    getTotalLikes(routineId: string) {
+        const parsedRoutineId = parseInt(routineId, 10);
+        return likesModel.getTotalLikes(parsedRoutineId);
     }
 }
