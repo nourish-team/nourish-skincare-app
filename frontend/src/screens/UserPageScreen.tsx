@@ -1,9 +1,10 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState, useContext } from "react";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../navigation/types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AntDesign } from "@expo/vector-icons";
+import UserContext from "../contexts/UserContext";
 
 type UserPageScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -14,6 +15,7 @@ const UserPageScreen: React.FC = () => {
   const [userRoutines, setUserRoutines] = useState<any[]>([]);
   const [fetchRoutinesError, setFetchRoutinesError] = useState(false);
   const navigation = useNavigation<UserPageScreenNavigationProp>();
+  const { userId } = useContext(UserContext);
 
   useEffect(() => {
     fetchRoutines();
@@ -21,8 +23,9 @@ const UserPageScreen: React.FC = () => {
 
   const fetchRoutines = async () => {
     try {
-      const response = await fetch(""); //put in route later
+      const response = await fetch(`http://10.0.2.2:8080/routine/user/1`); //put in route later
       const data = await response.json();
+      console.log(data);
       setUserRoutines(data);
     } catch (error) {
       setFetchRoutinesError(false);
@@ -37,6 +40,8 @@ const UserPageScreen: React.FC = () => {
     navigation.navigate("CreateNewRoutineScreen");
   };
 
+  console.log(userId);
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -48,12 +53,19 @@ const UserPageScreen: React.FC = () => {
       </View>
       <View style={styles.line} />
       <Text style={styles.infoText}>My Routines</Text>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         key={1}
         onPress={() => handleRoutinePress(1, "Summer 2020")}
       >
         <Text>{"Summer 2020"}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <View>
+        {userRoutines.map((item) => (
+          <View key={item.id}>
+            <Text>{item.routine_name}</Text>
+          </View>
+        ))}
+      </View>
       <View style={styles.createButtonContainer}>
         <TouchableOpacity onPress={handleCreateNewRoutinePress}>
           <AntDesign name="pluscircle" size={50} color="rgba(1,90,131,255)" />
