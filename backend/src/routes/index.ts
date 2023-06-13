@@ -9,6 +9,11 @@ import routineController from "../controller/routine.controller";
 import journalController from "../controller/journal.controller";
 import likesController from "../controller/likes.controller";
 
+// DEPLOYMENt
+router.get('/', (req: Request, res: Response) => {
+    res.send("<h1>Hello World!</h1>");
+})
+
 // SIGNUP
 router.post('/signup', signupController.createUser);
 
