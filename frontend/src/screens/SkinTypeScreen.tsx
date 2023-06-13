@@ -9,6 +9,7 @@ const SkincareTypeScreen: React.FC<{ route: any }> = ({ route }) => {
   const { skincareType } = route.params;
   const [routinesByType, setRoutinesByType] = useState([]);
   const [fetchRoutinesError, setFetchRoutinesError] = useState(false);
+  const [totalLikeRoutine, setTotalLikeRoutines] = useState(0);
   const {userId} = useContext(UserContext);
   
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -52,7 +53,27 @@ const SkincareTypeScreen: React.FC<{ route: any }> = ({ route }) => {
     } catch (error) {
       
     }
-  }
+  };
+
+  // const handelAllLikesRoutine =async (routineId : number)=> {
+  //   try {
+  //     console.log(routineId)
+  //     const response = await fetch(`http://10.0.2.2:8080/routine/skintype/${routineId}`); // put in route later
+  //     const data = await response.json();
+  //     console.log(data);
+  //     setTotalLikeRoutines(data);
+  //   } catch (error) {
+      
+  //   }
+  // };
+
+
+  // const likes = (routineId: number) => {
+  //  const total = handelAllLikesRoutine(routineId);
+  //  return <Text>{total}</Text>
+  // }
+
+ 
 
   return (
     <View style={styles.container}>
