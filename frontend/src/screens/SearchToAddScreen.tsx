@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -33,15 +33,15 @@ type SearchResult = {
 };
 
 const SearchToAddScreen: React.FC<Props> = ({ route, navigation }) => {
-  const { routineId } = route.params;
+  const { routineId, routineName, routineProduct } = route.params;
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [fetchItemsError, setFetchItemsError] = useState(false);
+  const [updateError, setUpdateError] = useState(false);
 
-  useEffect(() => {}, [routineId]);
+  // useEffect(() => {}, [routineId]);
 
   const handleSearchItem = async (brand: string) => {
-    console.log("BRAND ", brand);
     try {
       const acceptDifferences = brand.toLowerCase();
       const encodedBrand = encodeURIComponent(acceptDifferences);
@@ -62,10 +62,48 @@ const SearchToAddScreen: React.FC<Props> = ({ route, navigation }) => {
     }
   };
 
-  const handleItemSelect = () => {};
+  const handleItemSelect = useCallback(
+    async (itemId) => {
+      console.log("Routine Id in handleitemselect ", routineId);
+      const newRoutineProducts = routineProduct.concat(itemId);
+      const routineData = {
+        routine_id: routineId,
+        routine_product: newRoutineProducts,
+        public: true,
+      };
+      console.log("ROUTINE DATA ", routineData);
+      try {
+        const response = await fetch(`http://10.0.2.2:8080/routine/update`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(routineData),
+        });
+
+        if (response.ok) {
+          console.log("response ok");
+          setUpdateError(false);
+          navigation.navigate("UserRoutinePageScreen", {
+            routineId,
+            routineName,
+            routineProduct,
+          });
+        } else {
+          console.log("response not ok");
+          setUpdateError(true);
+        }
+      } catch (error) {
+        setUpdateError(true);
+        console.error(error);
+      }
+    },
+    [routineId, routineProduct]
+  );
 
   return (
     <View style={styles.container}>
+      {updateError ? <Text>Update unsuccessful. Please try again</Text> : null}
       <View style={styles.searchContainer}>
         <Text style={styles.titleText}>Search for products by brand</Text>
         <TextInput
@@ -85,7 +123,10 @@ const SearchToAddScreen: React.FC<Props> = ({ route, navigation }) => {
         <FlatList
           data={searchResults}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={handleItemSelect} style={styles.card}>
+            <TouchableOpacity
+              onPress={() => handleItemSelect(item.id)}
+              style={styles.card}
+            >
               <Text>{item.product_name}</Text>
             </TouchableOpacity>
           )}

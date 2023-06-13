@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation/types";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useFocusEffect } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 
 type RoutinePageScreenRouteProp = RouteProp<
@@ -24,7 +25,7 @@ type Props = {
 
 const UserRoutinePageScreen: React.FC<Props> = ({ route, navigation }) => {
   const { routineId, routineName, routineProduct } = route.params;
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<string[]>([]);
 
   const handleBackPress = () => {
     navigation.navigate("HomeScreen");
@@ -39,7 +40,11 @@ const UserRoutinePageScreen: React.FC<Props> = ({ route, navigation }) => {
   };
 
   const handleAddProduct = () => {
-    navigation.navigate("SearchToAddScreen", { routineId });
+    navigation.navigate("SearchToAddScreen", {
+      routineId,
+      routineName,
+      routineProduct,
+    });
   };
 
   const fetchProductName = async (id) => {
@@ -62,11 +67,13 @@ const UserRoutinePageScreen: React.FC<Props> = ({ route, navigation }) => {
     }
   };
 
-  useEffect(() => {
-    if (routineProduct) {
-      handleDisplayProducts();
-    }
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      if (routineProduct) {
+        handleDisplayProducts();
+      }
+    }, [routineProduct])
+  );
 
   return (
     <View style={styles.container}>
