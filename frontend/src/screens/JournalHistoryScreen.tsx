@@ -20,18 +20,17 @@ const JournalHistoryScreen: React.FC<Props> = ({ route }) => {
   const [journalEntries, setJournalEntries] = useState<any[]>([]);
   const [display, setDisplay] = useState<any[]>([]);
 
-  const tempData = [
-    { date: Date(), comments: "Hi" },
-    { date: Date(), comments: "i'm moo" },
-    { date: Date(), comments: "How are you" },
-  ];
-
   const displayData = () => {
     return journalEntries.map((entry, index) => (
       <View key={index}>
         <Text>{entry.date}</Text>
         <Text>{entry.comments}</Text>
-        {entry.img_url && <Image source={{ uri: entry.img_url }}></Image>}
+        {entry.img_url && (
+          <Image
+            source={{ uri: entry.img_url }}
+            style={{ width: 100, height: 100 }}
+          ></Image>
+        )}
       </View>
     ));
   };
