@@ -33,10 +33,11 @@ type SearchResult = {
 };
 
 const SearchToAddScreen: React.FC<Props> = ({ route, navigation }) => {
-  const { routineId } = route.params;
+  const { routineId, routineName, routineProduct } = route.params;
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [fetchItemsError, setFetchItemsError] = useState(false);
+  const [updateError, setUpdateError] = useState(false);
 
   useEffect(() => {}, [routineId]);
 
@@ -62,7 +63,40 @@ const SearchToAddScreen: React.FC<Props> = ({ route, navigation }) => {
     }
   };
 
-  const handleItemSelect = () => {};
+  const handleItemSelect = async (itemId) => {
+    const newRoutineProducts = routineProduct.concat(itemId);
+    const routineData = {
+      routine_id: routineId,
+      routine_product: newRoutineProducts,
+      public: true,
+    };
+    console.log("ROUTINE DATA ", routineData);
+    try {
+      const response = await fetch(`http://10.0.2.2:8080/routine/update`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(routineData),
+      });
+
+      if (response.ok) {
+        console.log("response ok");
+        setUpdateError(false);
+        navigation.navigate("UserRoutinePageScreen", {
+          routineId,
+          routineName,
+          routineProduct,
+        });
+      } else {
+        console.log("response not ok");
+        setUpdateError(true);
+      }
+    } catch (error) {
+      setUpdateError(true);
+      console.error(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -85,7 +119,10 @@ const SearchToAddScreen: React.FC<Props> = ({ route, navigation }) => {
         <FlatList
           data={searchResults}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={handleItemSelect} style={styles.card}>
+            <TouchableOpacity
+              onPress={() => handleItemSelect(item.id)}
+              style={styles.card}
+            >
               <Text>{item.product_name}</Text>
             </TouchableOpacity>
           )}
