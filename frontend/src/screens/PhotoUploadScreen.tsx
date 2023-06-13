@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Image, View, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { UPLOAD_PRESET, CLOUD_NAME } from "@env";
+import Constants from "expo-constants";
 
 export default function PhotoUploadScreen({
   image,
@@ -30,17 +30,20 @@ export default function PhotoUploadScreen({
         const base64Img = "data:image/jpeg;base64," + result.assets[0].base64;
         const uploadData = {
           file: base64Img,
-          upload_preset: UPLOAD_PRESET,
+          upload_preset: Constants.expoConfig?.extra?.UPLOAD_PRESET,
         };
 
         try {
-          fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, {
-            method: "POST",
-            body: JSON.stringify(uploadData),
-            headers: {
-              "content-type": "application/json",
-            },
-          })
+          fetch(
+            `https://api.cloudinary.com/v1_1/${Constants.expoConfig?.extra?.CLOUD_NAME}/upload`,
+            {
+              method: "POST",
+              body: JSON.stringify(uploadData),
+              headers: {
+                "content-type": "application/json",
+              },
+            }
+          )
             .then((res) => res.json())
             .then((r) => {
               setImage(r.secure_url);
