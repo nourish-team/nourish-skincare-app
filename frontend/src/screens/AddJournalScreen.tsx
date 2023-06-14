@@ -1,5 +1,7 @@
 import React, { useState, useContext } from "react";
-import userId from "../contexts/UserContext";
+import UserContext from "../contexts/UserContext";
+import { RootStackParamList } from "../navigation/types";
+import { RouteProp } from "@react-navigation/native";
 import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
@@ -14,39 +16,51 @@ import {
   TextInput,
 } from "react-native";
 
-export default function AddJournalScreen() {
-  const [date, setDate] = useState(new Date());
-  const [comment, setComment] = useState("");
-  const [image, setImage] = useState("");
+type AddJournalScreenRouteProp = RouteProp<
+  RootStackParamList,
+  "AddJournalScreen"
+>;
+type Props = {
+  route: AddJournalScreenRouteProp;
+};
 
-  const handleImage = (selection: string) => {
-    setImage(selection);
-  };
+const AddJournalScreen: React.FC<Props> = ({ route }) => {
+  const { routineId } = route.params;
+  const [commentDate, setCommentDate] = useState<Date>(new Date());
+  const [image, setImage] = useState("");
+  const [dateSelected, setDateSelected] = useState(false);
+  const { userId } = useContext(UserContext);
+  const [text, onChangeText] = useState("");
 
   const onChange = (
     event: DateTimePickerEvent,
-    selectedDate: Date = date
+    value: Date = commentDate
   ): void => {
-    const currentDate: Date = selectedDate;
-    setDate(currentDate);
+    setCommentDate(value);
+    setDateSelected(true);
   };
 
   const submitInfo = async () => {
     const journalData = {
-      userId: userId,
-      // routineId: routineId,
-      date: date,
-      comment: comment,
-      image: image,
+      users_id: userId,
+      routines_id: routineId,
+      date: commentDate,
+      comments: text,
+      img_url: image,
     };
+
     try {
-      fetch("/journal", {
+      const response = await fetch("http://10.0.2.2:8080/journal/routine", {
         method: "POST",
         body: JSON.stringify(journalData),
         headers: {
           "content-type": "application/json",
         },
       });
+      if (response.ok) {
+        alert("Comment successfully made!");
+        onChangeText("");
+      }
     } catch (err) {
       console.error(err);
     }
@@ -58,15 +72,22 @@ export default function AddJournalScreen() {
         <Text style={styles.question}>How was your skin today?</Text>
       </View>
       <View>
-        <Text>selected: {date.toLocaleDateString()}</Text>
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          onChange={onChange}
-        />
+        <Text>selected: {commentDate && commentDate.toLocaleDateString()}</Text>
+        {!dateSelected && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={commentDate}
+            onChange={onChange}
+          />
+        )}
       </View>
       <View style={styles.comment}>
-        <TextInput id="comment" placeholder="Comment" />
+        <TextInput
+          id="comment"
+          placeholder="Comment here"
+          onChangeText={onChangeText}
+          value={text}
+        />
       </View>
       <View style={styles.photoUpload}>
         <PhotoUploadScreen image={image} setImage={setImage} />
@@ -76,7 +97,7 @@ export default function AddJournalScreen() {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   page: {
@@ -102,3 +123,5 @@ const styles = StyleSheet.create({
     height: 80,
   },
 });
+
+export default AddJournalScreen;
