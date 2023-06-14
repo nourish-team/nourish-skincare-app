@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, StyleSheet, Button, Pressable, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -9,8 +16,8 @@ const SkincareTypeScreen: React.FC<{ route: any }> = ({ route }) => {
   const { skincareType } = route.params;
   const [routinesByType, setRoutinesByType] = useState([]);
   const [fetchRoutinesError, setFetchRoutinesError] = useState(false);
-  const {userId} = useContext(UserContext);
-  
+  const { userId } = useContext(UserContext);
+
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const handleBackPress = () => {
@@ -23,7 +30,9 @@ const SkincareTypeScreen: React.FC<{ route: any }> = ({ route }) => {
 
   const fetchRoutinesByType = async () => {
     try {
-      const response = await fetch(`http://10.0.2.2:8080/routine/skintype/${skincareType.toLowerCase()}`); // put in route later
+      const response = await fetch(
+        `https://nourishskin.herokuapp.com/routine/skintype/${skincareType.toLowerCase()}`
+      ); // put in route later
       const data = await response.json();
       setRoutinesByType(data);
     } catch (error) {
@@ -31,28 +40,29 @@ const SkincareTypeScreen: React.FC<{ route: any }> = ({ route }) => {
     }
   };
 
-  const handelPostLike = async (routineId:number) => {
+  const handelPostLike = async (routineId: number) => {
     console.log(routineId, "was clicked clicked");
     const postReq = {
       users_id: userId,
       routines_id: routineId,
-      like: true
-    }
+      like: true,
+    };
 
     try {
-      const response = await fetch(`http://10.0.2.2:8080/like/routine`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postReq),
-      }); // put in route later
+      const response = await fetch(
+        `https://nourishskin.herokuapp.com/like/routine`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postReq),
+        }
+      ); // put in route later
       const data = await response.json();
       console.log("data of like", data);
-    } catch (error) {
-      
-    }
-  }
+    } catch (error) {}
+  };
 
   return (
     <View style={styles.container}>
@@ -63,11 +73,11 @@ const SkincareTypeScreen: React.FC<{ route: any }> = ({ route }) => {
           <Text style={styles.routineProduct}>{routine.routine_product}</Text>
           <Text style={styles.createdAt}>{routine.created_at}</Text>
           <TouchableOpacity
-          style={styles.likeButton}
-          onPress={() => handelPostLike(routine.id)}
+            style={styles.likeButton}
+            onPress={() => handelPostLike(routine.id)}
           >
-          <Icon name="heart" size={20} color="#FFD1DC" />
-          <Text>Like</Text>
+            <Icon name="heart" size={20} color="#FFD1DC" />
+            <Text>Like</Text>
           </TouchableOpacity>
         </View>
       ))}
@@ -108,7 +118,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
 });
-  
 
 //   return (
 //     <View style={styles.container}>
@@ -121,11 +130,11 @@ const styles = StyleSheet.create({
 //           <Pressable style={styles.button} onPress={() => handelPostLike(routine.id)}>
 //             <Text>Like</Text>
 //           </Pressable>
-          
+
 //         </View>
 //       ))}
-//       <Button title="Back" onPress={handleBackPress} />  
-//     </View>  
+//       <Button title="Back" onPress={handleBackPress} />
+//     </View>
 //   );
 // };
 

@@ -47,7 +47,7 @@ const SearchToAddScreen: React.FC<Props> = ({ route, navigation }) => {
       const acceptDifferences = brand.toLowerCase();
       const encodedBrand = encodeURIComponent(acceptDifferences);
       const response = await fetch(
-        `http://10.0.2.2:8080/product/${encodedBrand}`
+        `https://nourishskin.herokuapp.com/product/${encodedBrand}`
       );
       if (response.ok) {
         const data = await response.json();
@@ -72,13 +72,16 @@ const SearchToAddScreen: React.FC<Props> = ({ route, navigation }) => {
     };
     console.log("ROUTINE DATA ", routineData);
     try {
-      const response = await fetch(`http://10.0.2.2:8080/routine/update`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(routineData),
-      });
+      const response = await fetch(
+        `https://nourishskin.herokuapp.com/routine/update`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(routineData),
+        }
+      );
 
       if (response.ok) {
         console.log("response ok");
@@ -111,7 +114,7 @@ const SearchToAddScreen: React.FC<Props> = ({ route, navigation }) => {
           onPress={() => handleSearchItem(searchQuery)}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Search {routineId}</Text>
+          <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.resultContainer}>

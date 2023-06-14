@@ -36,7 +36,7 @@ const CreateNewRoutineScreen: React.FC<Prop> = ({ route, navigation }) => {
     (number | { itemId: number; itemName: string })[]
   >([]);
   const [routineName, setRoutineName] = useState("");
-  const skinTypeOptions = ["Oily", "Sensitive", "Dry", "Acne"];
+  const skinTypeOptions = ["oily", "sensitive", "dry", "acne"];
   const [selectedSkinType, setSelectedSkinType] = useState<string>("");
   const [isPublic, setIsPublic] = useState(false);
   const [error, setError] = useState(false);
@@ -77,13 +77,16 @@ const CreateNewRoutineScreen: React.FC<Prop> = ({ route, navigation }) => {
     };
 
     try {
-      const response = await fetch("http://10.0.2.2:8080/routine/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(routineData),
-      });
+      const response = await fetch(
+        "https://nourishskin.herokuapp.com/routine/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(routineData),
+        }
+      );
 
       if (response.ok) {
         setError(false);

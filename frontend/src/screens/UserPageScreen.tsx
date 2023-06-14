@@ -37,7 +37,7 @@ const UserPageScreen: React.FC = () => {
   const fetchRoutines = async () => {
     try {
       const response = await fetch(
-        `http://10.0.2.2:8080/routine/user/${userId}`
+        `https://nourishskin.herokuapp.com/routine/user/${userId}`
       );
       const data = await response.json();
       setUserRoutines(data);

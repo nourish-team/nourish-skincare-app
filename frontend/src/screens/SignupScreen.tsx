@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import UserContext from "../contexts/UserContext";
 
 const auth = getAuth();
@@ -19,7 +19,7 @@ const SignupScreen: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-  const {setUserId, setUserName} = useContext(UserContext);
+  const { setUserId, setUserName } = useContext(UserContext);
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
@@ -35,18 +35,22 @@ const SignupScreen: React.FC = () => {
     if (name === "" || email === "" || password === "") {
       setError(true);
       return;
-    } 
+    }
 
     setError(false);
 
     try {
-      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredentials.user;
 
-      const response = await fetch('http://10.0.2.2:8080/signup', {
-        method: 'POST',
+      const response = await fetch("https://nourishskin.herokuapp.com/signup", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           username: name,
@@ -56,13 +60,12 @@ const SignupScreen: React.FC = () => {
       });
 
       if (response.ok) {
-        const {id, username} = await response.json();
+        const { id, username } = await response.json();
         console.log("username ", username);
         setUserId(id);
         setUserName(username);
-        alert("Sign Up successful!")
+        alert("Sign Up successful!");
       }
-
     } catch (error) {
       console.error(error);
       setError(true);
@@ -70,7 +73,7 @@ const SignupScreen: React.FC = () => {
       setEmail("");
       setPassword("");
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -94,12 +97,15 @@ const SignupScreen: React.FC = () => {
         onChangeText={(input) => setPassword(input)}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.buttonContainer} onPress={handleSignupButtonPress}>
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={handleSignupButtonPress}
+      >
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-      {error ? <Text>Oops, something went wrong</Text>: null}
+      {error ? <Text>Oops, something went wrong</Text> : null}
 
-      <Button title="Submit" onPress={handleTestSignupButtonPress}></Button>
+      {/* <Button title="Submit" onPress={handleTestSignupButtonPress}></Button> */}
       <Button title="Back" onPress={handleBackPress} />
     </View>
   );

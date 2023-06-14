@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -18,7 +18,7 @@ const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-  const {setUserId, setUserName} = useContext(UserContext);
+  const { setUserId, setUserName } = useContext(UserContext);
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
@@ -39,29 +39,36 @@ const LoginScreen: React.FC = () => {
     setError(false);
 
     try {
-      const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredentials.user;
 
       if (user !== null) {
-        const response = await fetch('http://10.0.2.2:8080/login/user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-        }),
-      })
+        const response = await fetch(
+          "https://nourishskin.herokuapp.com/login/user",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: email,
+            }),
+          }
+        );
 
-      if (response.ok) {
-        const {id, username} = await response.json();
-        console.log("USERNAME ", username);
-        setUserId(id);
-        setUserName(username);
-        alert("Login successful!");
-        setEmail("");
-        setPassword("");
-      }
+        if (response.ok) {
+          const { id, username } = await response.json();
+          console.log("USERNAME ", username);
+          setUserId(id);
+          setUserName(username);
+          alert("Login successful!");
+          setEmail("");
+          setPassword("");
+        }
       } else {
         setError(true);
       }
@@ -69,21 +76,33 @@ const LoginScreen: React.FC = () => {
       // console.error(error);
       setError(true);
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
       <Text>login</Text>
       <Text style={styles.signupText}>email</Text>
-      <TextInput style={styles.inputContainer} value={email} onChangeText={(input) => setEmail(input)}></TextInput>
+      <TextInput
+        style={styles.inputContainer}
+        value={email}
+        onChangeText={(input) => setEmail(input)}
+      ></TextInput>
       <Text>password</Text>
-      <TextInput style={styles.inputContainer} value={password} onChangeText={(input) => setPassword(input)} secureTextEntry></TextInput>
-      <TouchableOpacity style={styles.buttonContainer} onPress={handleLoginButtonPress}>
+      <TextInput
+        style={styles.inputContainer}
+        value={password}
+        onChangeText={(input) => setPassword(input)}
+        secureTextEntry
+      ></TextInput>
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={handleLoginButtonPress}
+      >
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      {error ? <Text>Oops, something went wrong</Text>: null}
-      
-      <Button title="Submit" onPress={handleTestLoginButtonPress}></Button>
+      {error ? <Text>Oops, something went wrong</Text> : null}
+
+      {/* <Button title="Submit" onPress={handleTestLoginButtonPress}></Button> */}
       <Button title="Back" onPress={handleBackPress} />
     </View>
   );
