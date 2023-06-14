@@ -17,8 +17,19 @@ type Props = {
 const JournalHistoryScreen: React.FC<Props> = ({ route }) => {
   const { routineId } = route.params;
   const { userId } = useContext(UserContext);
-  const [journalEntries, setJournalEntries] = useState<any[]>([]);
-  const [display, setDisplay] = useState<any[]>([]);
+  const [journalEntries, setJournalEntries] = useState<
+    {
+      comments: string | undefined;
+      date: string;
+      img_url: string | undefined;
+      routine_id: {
+        routine_name: string;
+        routine_product: number[];
+        skin_type: string;
+      };
+    }[]
+  >([]);
+  const [display, setDisplay] = useState<JSX.Element[]>([]);
 
   const displayData = () => {
     return journalEntries.map((entry, index) => (
